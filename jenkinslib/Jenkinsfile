@@ -6,8 +6,8 @@ def build = new org.devops.build()
 def deploy = new org.devops.deploy()
 
 String buildType = "${env.buildType}"
-String buildShell = "{env.buildShell}"
-String deployHosts = "{env.deployHosts}"
+String buildShell = "${env.buildShell}"
+String deployHosts = "${env.deployHosts}"
 
 pipeline{
   anget { node { label "master" }}
