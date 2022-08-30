@@ -1,1 +1,26 @@
-1
+#!groovy 
+
+@Library('jenkinslibrary@main') _
+
+def build = new org.devops.build()
+def deploy = new org.devops.deploy()
+
+String buildType = "${env.buildType}"
+String buildShell = "{env.buildShell}"
+String deployHosts = "{env.deployHosts}"
+
+pipeline{
+  anget { node { label "master" }}
+  
+  stages {
+    stage("build){
+      steps{
+        script{
+          build.Build(buildType,buildShell)
+          
+          deploy.SaltDeploy("${deployHosts}","test.ping")
+          deploy.AnsibleDeploy("${deployHosts}","-m ping")
+          }
+      }
+  }
+  
